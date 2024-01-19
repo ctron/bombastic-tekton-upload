@@ -5,11 +5,20 @@ metadata:
 spec:
 
   steps:
-    - name: send
-      image: registry.access.redhat.com/ubi9/ubi:latest
+    - name: create
+      image: ghcr.io/ctron/batteries:1
       script: |
         #!/usr/bin/bash
-        echo '{}' > /sboms/sbom.json
+        set -e
+        cd /sboms
+        curl -sSL https://access.redhat.com/security/data/sbom/beta/spdx/quarkus-bom-3.2.9.Final-redhat-00003.json.bz2 -o example-sbom.json.bz2
+        bunzip2 example-sbom.json.bz2
+
+    - name: debug
+      image: ghcr.io/ctron/batteries:1
+      script: |
+        find /sboms
+
   workspaces:
     - name: output
       description: The folder to scan SBOMs from
