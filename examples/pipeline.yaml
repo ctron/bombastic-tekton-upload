@@ -1,0 +1,43 @@
+apiVersion: tekton.dev/v1
+kind: Pipeline
+metadata:
+  name: example
+spec:
+  workspaces:
+    - name: sboms
+
+  params:
+    - name: bombastic-api-url
+      type: string
+    - name: bombastic-issuer-url
+      type: string
+    - name: bombastic-client-id
+      type: string
+    - name: bombastic-client-secret
+      type: string
+
+  tasks:
+    - name: create-sbom
+      taskRef:
+        name: create-sbom
+      workspaces:
+        - name: output
+          workspace: sboms
+
+    - name: upload-sbom
+      runAfter:
+        - create-sbom
+      taskRef:
+        name: send-sbom
+      params:
+        - name: sink-url
+          value: $(params.bombastic-api-url)
+        - name: issuer-url
+          value: $(params.bombastic-issuer-url)
+        - name: client-id
+          value: $(params.bombastic-client-id)
+        - name: client-secret
+          value: $(params.bombastic-client-secret)
+      workspaces:
+        - name: input
+          workspace: sboms

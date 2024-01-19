@@ -1,0 +1,16 @@
+apiVersion: tekton.dev/v1
+kind: Task
+metadata:
+  name: create-sbom
+spec:
+
+  steps:
+    - name: send
+      image: registry.access.redhat.com/ubi9/ubi:latest
+      script: |
+        #!/usr/bin/bash
+        echo '{}' > /sboms/sbom.json
+  workspaces:
+    - name: output
+      description: The folder to scan SBOMs from
+      mountPath: /sboms

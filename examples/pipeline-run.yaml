@@ -1,0 +1,19 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  name: example-run
+spec:
+  pipelineRef:
+    name: example
+  params:
+    - name: bombastic-api-url
+      value: "https://sbom.apps.<>/api/v1/sbom"
+    - name: bombastic-issuer-url
+      value: "https://sso.apps.<>/realms/chicken"
+    - name: bombastic-client-id
+      value: walker
+    - name: bombastic-client-secret
+      value: should-be-secret
+  workspaces:
+    - name: sboms
+      emptyDir: {}
