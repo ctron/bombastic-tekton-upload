@@ -30,6 +30,10 @@ oc -n test apply -f install
 
 ## Example
 
+A quick example with mock data.
+
+### Setup
+
 Next, we create a task which generates us an SBOM for testing:
 
 ```shell
@@ -42,8 +46,18 @@ Then, we create an example pipeline:
 oc -n test apply -f examples/pipeline.yaml
 ```
 
+### Running via the CLI
+
 Then, we can trigger a run of this pipeline. It is necessary to provide some parameters:
 
 ```shell
-tkn pipeline start example -n test -w 'sboms=my-empty-dir,emptyDir=""' -p bombastic-api-url=https://sbom.apps.cluster-8mn59.sandbox909.opentlc.com/api/v1/sbom -p bombastic-issuer-url=https://sso.apps.cluster-8mn59.sandbox909.opentlc.com/realms/chicken -p bombastic-client-id=walker -p bombastic-client-secret=$(oc -n trustification get secrets oidc-client-walker -o 'jsonpath={ .data.client-secret }' | base64 -d)
+tkn pipeline start example -n test -w 'name=sboms,volumeClaimTemplateFile=examples/workspace-volume-claim.yaml' -p bombastic-api-url=https://sbom.apps.cluster-8mn59.sandbox909.opentlc.com/api/v1/sbom -p bombastic-issuer-url=https://sso.apps.cluster-8mn59.sandbox909.opentlc.com/realms/chicken -p bombastic-client-id=walker -p bombastic-client-secret=$(oc -n trustification get secrets oidc-client-walker -o 'jsonpath={ .data.client-secret }' | base64 -d)
+```
+
+### Following the logs
+
+Run:
+
+```shell
+tkn p logs -L -f example
 ```

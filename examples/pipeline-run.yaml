@@ -16,4 +16,11 @@ spec:
       value: should-be-secret
   workspaces:
     - name: sboms
-      emptyDir: {}
+      volumeClaimTemplate:
+        spec:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 1Gi
+

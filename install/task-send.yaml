@@ -27,7 +27,7 @@ spec:
         mkdir /upload/metadata
         echo '{"keys": []}' > /upload/metadata/metadata.json 
         
-        sbom send /upload --oidc-issuer-url "$(params.issuer-url)" --oidc-client-id "$(params.client-id)" --oidc-client-secret "$(params.client-secret)" "$(params.sink-url)"
+        sbom send -vvv /upload --oidc-issuer-url "$(params.issuer-url)" --oidc-client-id "$(params.client-id)" --oidc-client-secret "$(params.client-secret)" "$(params.sink-url)"
 
   workspaces:
     - name: input
