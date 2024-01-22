@@ -11,8 +11,7 @@ spec:
         #!/usr/bin/bash
         set -e
         cd /sboms
-        curl -sSL https://access.redhat.com/security/data/sbom/beta/spdx/quarkus-bom-3.2.9.Final-redhat-00003.json.bz2 -o example-sbom.json.bz2
-        bunzip2 example-sbom.json.bz2
+        curl -sSL https://raw.githubusercontent.com/ctron/bombastic-tekton-upload/main/examples/data/bom.json -o example-sbom.json
 
     - name: debug
       image: ghcr.io/ctron/batteries:1
