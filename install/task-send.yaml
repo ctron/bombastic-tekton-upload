@@ -19,7 +19,7 @@ spec:
 
   steps:
     - name: send
-      image: ghcr.io/ctron/csaf-walker:latest
+      image: ghcr.io/ctron/csaf-walker:0.6.0-alpha.3
       script: |
         #!/bin/sh
         
